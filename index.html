@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>St. Thomas More Machrina High School</title>
-    <!-- Google Fonts: Oswald (Headings like Knockout), Inter (Body) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts: Oswald (Headings), Inter (Body) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -13,170 +13,228 @@
         /* CSS Variables - Color Palette & Styling */
         :root {
             --navy: #00205B;
+            --navy-dark: #00133d;
             --gold: #FFB81C;
+            --gold-hover: #e09f12;
             --green: #007A5E;
-            --light-gray: #F4F4F4;
+            --light-gray: #F8F9FA;
             --white: #FFFFFF;
-            --text-dark: #333333;
+            --text-dark: #2C3E50;
             --font-head: 'Oswald', sans-serif;
             --font-body: 'Inter', sans-serif;
-            --transition: all 0.3s ease;
+            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
-        /* Global Reset */
+        /* Global Reset & Scrollbar */
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
         body { font-family: var(--font-body); color: var(--text-dark); line-height: 1.6; background-color: var(--light-gray); overflow-x: hidden; }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--light-gray); }
+        ::-webkit-scrollbar-thumb { background: var(--navy); border-radius: 5px; }
+        
         a { text-decoration: none; color: inherit; transition: var(--transition); }
         ul { list-style: none; }
-        img { max-width: 100%; display: block; }
+        img { max-width: 100%; display: block; object-fit: cover; }
         
         /* Typography */
         h1, h2, h3, h4 { font-family: var(--font-head); text-transform: uppercase; letter-spacing: 0.5px; }
-        h1 { font-size: 4rem; line-height: 1.1; margin-bottom: 1rem; color: var(--white); }
-        h2 { font-size: 2.5rem; margin-bottom: 1.5rem; color: var(--navy); }
+        h1 { font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--white); text-shadow: 2px 4px 10px rgba(0,0,0,0.5); }
+        h2 { font-size: clamp(2rem, 3vw, 2.8rem); margin-bottom: 1.5rem; color: var(--navy); position: relative; display: inline-block; }
+        h2::after { content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); width: 60px; height: 3px; background: var(--gold); }
+        .text-left h2::after { left: 0; transform: none; }
         h3 { font-size: 1.5rem; margin-bottom: 1rem; }
-        p { margin-bottom: 1rem; }
+        p { margin-bottom: 1rem; color: #555; }
 
-        /* Buttons */
-        .btn { display: inline-block; padding: 12px 24px; font-weight: 600; font-family: var(--font-head); text-transform: uppercase; letter-spacing: 1px; border: 2px solid transparent; cursor: pointer; transition: var(--transition); }
+        /* Advanced Buttons */
+        .btn { display: inline-flex; align-items: center; justify-content: center; padding: 14px 28px; font-weight: 600; font-family: var(--font-head); text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: var(--transition); position: relative; overflow: hidden; z-index: 1; border: none; }
+        .btn::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; z-index: -1; transition: var(--transition); }
+        .btn:hover::before { left: 0; }
+        
         .btn-gold { background: var(--gold); color: var(--navy); }
-        .btn-gold:hover { background: #e09f12; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .btn-gold::before { background: var(--gold-hover); }
+        .btn-gold:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(255, 184, 28, 0.3); }
+        
         .btn-navy { background: var(--navy); color: var(--white); }
-        .btn-navy:hover { background: #00153d; transform: translateY(-2px); }
-        .btn-outline { background: transparent; border-color: var(--white); color: var(--white); }
-        .btn-outline:hover { background: var(--white); color: var(--navy); }
+        .btn-navy::before { background: var(--navy-dark); }
+        .btn-navy:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0, 32, 91, 0.3); color: var(--white); }
+        
+        .btn-outline { background: transparent; border: 2px solid var(--white); color: var(--white); }
+        .btn-outline::before { background: var(--white); }
+        .btn-outline:hover { color: var(--navy); }
 
         /* Layout Utility */
-        .container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
+        .container { max-width: 1300px; margin: 0 auto; padding: 0 2rem; }
         .section-padding { padding: 6rem 0; }
         .text-center { text-align: center; }
 
+        /* Scroll Animation Classes (JavaScript triggers these) */
+        .reveal { opacity: 0; transform: translateY(50px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+
         /* Header / Navigation */
-        header { background: var(--white); position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); transition: var(--transition); }
-        .nav-container { display: flex; justify-content: space-between; align-items: center; height: 90px; }
+        header { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); position: fixed; width: 100%; top: 0; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.05); transition: var(--transition); }
+        header.scrolled { padding: -10px 0; background: rgba(255, 255, 255, 0.98); }
+        header.scrolled .nav-container { height: 75px; }
         
-        .logo { display: flex; align-items: center; gap: 10px; font-family: var(--font-head); color: var(--navy); font-size: 1.2rem; font-weight: 700; text-transform: uppercase; line-height: 1.1; }
-        .logo i { font-size: 2rem; color: var(--gold); }
-        .logo span { max-width: 150px; }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; height: 100px; transition: var(--transition); }
+        .logo { display: flex; align-items: center; gap: 12px; font-family: var(--font-head); color: var(--navy); font-size: 1.3rem; font-weight: 700; text-transform: uppercase; line-height: 1.1; }
+        .logo i { font-size: 2.2rem; color: var(--gold); transition: var(--transition); }
+        .logo:hover i { transform: rotate(15deg) scale(1.1); }
 
         .nav-links { display: flex; gap: 2rem; }
-        .nav-links a { font-family: var(--font-head); font-weight: 500; font-size: 1.1rem; text-transform: uppercase; color: var(--navy); position: relative; }
-        .nav-links a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0; background-color: var(--gold); transition: var(--transition); }
+        .nav-links a { font-family: var(--font-head); font-weight: 500; font-size: 1.1rem; text-transform: uppercase; color: var(--navy); position: relative; padding: 5px 0; }
+        .nav-links a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 0; background-color: var(--gold); transition: var(--transition); }
         .nav-links a:hover::after { width: 100%; }
 
-        .nav-actions { display: flex; align-items: center; gap: 1rem; }
-        .portal-link { font-weight: 600; color: var(--navy); font-size: 0.9rem; text-decoration: underline; }
+        .nav-actions { display: flex; align-items: center; gap: 1.5rem; }
+        .portal-link { font-weight: 600; color: var(--navy); font-size: 0.95rem; text-decoration: none; position: relative; }
+        .portal-link:hover { color: var(--gold); }
         
-        .mobile-menu-btn { display: none; font-size: 1.5rem; color: var(--navy); cursor: pointer; }
+        .mobile-menu-btn { display: none; font-size: 1.8rem; color: var(--navy); cursor: pointer; }
 
-        /* Hero Section */
-        .hero { position: relative; min-height: 90vh; display: flex; align-items: center; background: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat; }
-        .hero::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(0, 32, 91, 0.9) 0%, rgba(0, 32, 91, 0.4) 100%); }
-        .hero-content { position: relative; z-index: 1; max-width: 800px; color: var(--white); }
-        .hero-content p.subhead { font-size: 1.25rem; font-weight: 300; margin-bottom: 2rem; max-width: 600px; }
+        /* Animated Hero Slider Section */
+        .hero { position: relative; height: 100vh; overflow: hidden; display: flex; align-items: center; }
+        .hero-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.5s ease-in-out; background-size: cover; background-position: center; }
+        .hero-slide.active { opacity: 1; transform: scale(1.02); transition: opacity 1.5s ease-in-out, transform 6s linear; }
+        .hero-overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(0, 32, 91, 0.95) 0%, rgba(0, 32, 91, 0.5) 50%, rgba(0, 0, 0, 0.2) 100%); z-index: 1; }
+        
+        .hero-content { position: relative; z-index: 2; max-width: 800px; color: var(--white); padding-top: 5rem; }
+        .hero-content p.subhead { font-size: 1.25rem; font-weight: 300; margin-bottom: 2.5rem; max-width: 600px; color: rgba(255,255,255,0.9); }
         .hero-buttons { display: flex; gap: 1rem; }
 
         /* Stats Overlay */
-        .stats-overlay { position: relative; margin-top: -50px; z-index: 10; }
-        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); background: var(--navy); box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
-        .stat-box { padding: 2rem; text-align: center; color: var(--white); border-right: 1px solid rgba(255,255,255,0.1); }
+        .stats-overlay { position: relative; margin-top: -60px; z-index: 10; }
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); background: var(--navy); box-shadow: 0 20px 40px rgba(0,0,0,0.2); border-radius: 8px; overflow: hidden; }
+        .stat-box { padding: 2.5rem; text-align: center; color: var(--white); border-right: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden; transition: var(--transition); }
+        .stat-box:hover { background: var(--navy-dark); transform: translateY(-5px); }
         .stat-box:last-child { border-right: none; }
-        .stat-box i { font-size: 2rem; color: var(--gold); margin-bottom: 1rem; }
-        .stat-box h4 { font-size: 1.5rem; margin-bottom: 0.5rem; }
-        .stat-box p { font-size: 0.9rem; margin-bottom: 0; opacity: 0.8; font-family: var(--font-head); text-transform: uppercase; }
+        .stat-box i { font-size: 2.5rem; color: var(--gold); margin-bottom: 1rem; transition: transform 0.3s; }
+        .stat-box:hover i { transform: scale(1.2); }
+        .stat-box h4 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+        .stat-box p { font-size: 0.9rem; margin-bottom: 0; opacity: 0.8; font-family: var(--font-head); text-transform: uppercase; letter-spacing: 1px; }
 
         /* Academics Section */
-        .academics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem; }
-        .academic-card { background: var(--white); padding: 3rem 2rem; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: var(--transition); border-top: 4px solid var(--navy); }
-        .academic-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); border-color: var(--gold); }
-        .academic-card i { font-size: 3rem; color: var(--green); margin-bottom: 1.5rem; }
-        .academic-card h3 { color: var(--navy); }
-        .academic-card a { color: var(--gold); font-weight: 600; text-transform: uppercase; font-family: var(--font-head); font-size: 1.1rem; display: inline-flex; align-items: center; gap: 5px; margin-top: 1rem; }
-        .academic-card a:hover { gap: 10px; }
+        .academics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 4rem; }
+        .academic-card { background: var(--white); padding: 3rem 2rem; text-align: center; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: var(--transition); border-bottom: 4px solid var(--navy); position: relative; overflow: hidden; }
+        .academic-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 0; background: rgba(0, 122, 94, 0.03); transition: var(--transition); z-index: 0; }
+        .academic-card:hover::before { height: 100%; }
+        .academic-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); border-color: var(--gold); }
+        .academic-card i { font-size: 3.5rem; color: var(--green); margin-bottom: 1.5rem; position: relative; z-index: 1; }
+        .academic-card h3 { color: var(--navy); position: relative; z-index: 1; }
+        .academic-card p { position: relative; z-index: 1; }
+        .academic-card a { color: var(--gold); font-weight: 600; text-transform: uppercase; font-family: var(--font-head); font-size: 1.1rem; display: inline-flex; align-items: center; gap: 8px; margin-top: 1rem; position: relative; z-index: 1; }
+        .academic-card a i { font-size: 1rem; color: var(--gold); margin: 0; transition: transform 0.3s; }
+        .academic-card a:hover i { transform: translateX(5px); }
+
+        /* Continuous Image Marquee Gallery */
+        .marquee-section { padding: 4rem 0; background: var(--white); overflow: hidden; }
+        .marquee-container { display: flex; width: 200%; animation: scrollMarquee 30s linear infinite; }
+        .marquee-container:hover { animation-play-state: paused; }
+        .marquee-item { width: 20vw; min-width: 250px; height: 300px; padding: 0 10px; position: relative; }
+        .marquee-item img { width: 100%; height: 100%; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: transform 0.3s; }
+        .marquee-item:hover img { transform: scale(1.05); }
+        
+        @keyframes scrollMarquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         /* Split Section: Values */
         .values-section { display: grid; grid-template-columns: 1fr 1fr; background: var(--navy); color: var(--white); }
-        .values-img { background: url('https://images.unsplash.com/photo-1606761568499-6d2451b23c66?q=80&w=1000&auto=format&fit=crop') center/cover no-repeat; min-height: 500px; }
+        .values-img { background: url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=1000&auto=format&fit=crop') center/cover no-repeat; min-height: 600px; position: relative; }
         .values-content { padding: 6rem 4rem; display: flex; flex-direction: column; justify-content: center; }
         .values-content h2 { color: var(--gold); }
-        .values-content blockquote { font-size: 1.5rem; font-style: italic; font-weight: 300; border-left: 4px solid var(--green); padding-left: 1.5rem; margin: 2rem 0; }
-        
-        /* Admissions Path */
-        .admissions-bg { background: var(--white); }
-        .steps-container { display: flex; justify-content: space-between; position: relative; margin: 4rem 0; }
-        .steps-container::before { content: ''; position: absolute; top: 40px; left: 10%; right: 10%; height: 2px; background: var(--light-gray); z-index: 1; }
-        .step { position: relative; z-index: 2; text-align: center; flex: 1; padding: 0 1rem; }
-        .step-icon { width: 80px; height: 80px; background: var(--navy); color: var(--white); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 1.5rem auto; border: 4px solid var(--white); box-shadow: 0 0 0 4px var(--light-gray); transition: var(--transition); }
-        .step:hover .step-icon { background: var(--gold); color: var(--navy); box-shadow: 0 0 0 4px var(--gold); }
+        .values-content h2::after { background: var(--white); left: 0; transform: none; }
+        .values-content blockquote { font-size: 1.6rem; font-style: italic; font-weight: 300; border-left: 5px solid var(--gold); padding-left: 2rem; margin: 2.5rem 0; background: rgba(255,255,255,0.05); padding-top: 1rem; padding-bottom: 1rem; border-radius: 0 10px 10px 0; }
+        .values-content p { color: rgba(255,255,255,0.85); font-size: 1.1rem; }
 
-        /* Campus Life Gallery */
-        .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 3rem; }
-        .gallery-item { position: relative; height: 300px; overflow: hidden; }
-        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        /* Admissions Path */
+        .steps-container { display: flex; justify-content: space-between; position: relative; margin: 5rem 0; }
+        .steps-container::before { content: ''; position: absolute; top: 45px; left: 10%; right: 10%; height: 3px; background: #E0E0E0; z-index: 1; }
+        .step { position: relative; z-index: 2; text-align: center; flex: 1; padding: 0 1rem; cursor: pointer; }
+        .step-icon { width: 90px; height: 90px; background: var(--white); color: var(--navy); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin: 0 auto 1.5rem auto; border: 4px solid var(--navy); box-shadow: 0 0 0 6px var(--white), 0 5px 15px rgba(0,0,0,0.1); transition: var(--transition); }
+        .step:hover .step-icon { background: var(--gold); color: var(--navy); border-color: var(--gold); transform: scale(1.1); }
+        .step h3 { transition: var(--transition); }
+        .step:hover h3 { color: var(--gold); }
+
+        /* Campus Life Grid */
+        .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 4rem; }
+        .gallery-item { position: relative; height: 350px; overflow: hidden; border-radius: 8px; cursor: pointer; }
+        .gallery-item img { width: 100%; height: 100%; transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1); }
         .gallery-item:hover img { transform: scale(1.1); }
-        .gallery-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,32,91,0.8), transparent); display: flex; align-items: flex-end; padding: 1.5rem; opacity: 0; transition: var(--transition); }
+        .gallery-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,32,91,0.9), transparent); display: flex; align-items: flex-end; padding: 2rem; opacity: 0; transition: var(--transition); }
         .gallery-item:hover .gallery-overlay { opacity: 1; }
-        .gallery-overlay h3 { color: var(--white); margin: 0; font-size: 1.25rem; }
+        .gallery-overlay h3 { color: var(--white); margin: 0; font-size: 1.4rem; transform: translateY(20px); transition: var(--transition); }
+        .gallery-item:hover .gallery-overlay h3 { transform: translateY(0); }
 
         /* Newsroom */
-        .news-bg { background: var(--light-gray); }
-        .news-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 3rem; }
-        .news-card { background: var(--white); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        .news-img { height: 200px; background-color: var(--navy); overflow: hidden; }
-        .news-img img { width: 100%; height: 100%; object-fit: cover; }
-        .news-content { padding: 2rem; }
-        .news-date { color: var(--green); font-weight: 600; font-size: 0.85rem; text-transform: uppercase; margin-bottom: 0.5rem; display: block; }
-        .news-content h3 { color: var(--navy); font-size: 1.25rem; line-height: 1.3; }
-        .news-content a { color: var(--navy); font-weight: 600; text-decoration: underline; font-size: 0.9rem; }
+        .news-bg { background: var(--white); }
+        .news-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 4rem; }
+        .news-card { background: var(--light-gray); border-radius: 10px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: var(--transition); }
+        .news-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+        .news-img { height: 220px; overflow: hidden; position: relative; }
+        .news-img img { width: 100%; height: 100%; transition: var(--transition); }
+        .news-card:hover .news-img img { transform: scale(1.05); }
+        .news-content { padding: 2.5rem 2rem; }
+        .news-date { display: inline-block; background: var(--green); color: var(--white); padding: 5px 12px; border-radius: 20px; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 1rem; }
+        .news-content h3 { color: var(--navy); font-size: 1.3rem; line-height: 1.4; }
+        .news-content a { color: var(--navy); font-weight: 600; text-decoration: none; font-size: 1rem; display: inline-flex; align-items: center; gap: 5px; margin-top: 10px; }
+        .news-content a i { font-size: 0.8rem; transition: var(--transition); }
         .news-content a:hover { color: var(--gold); }
+        .news-content a:hover i { transform: translateX(5px); }
 
         /* Footer */
-        footer { background: var(--navy); color: var(--white); padding: 4rem 0 2rem 0; }
-        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
-        .footer-logo { display: flex; align-items: center; gap: 10px; font-family: var(--font-head); font-size: 1.5rem; margin-bottom: 1.5rem; }
-        .footer-logo i { color: var(--gold); }
-        .footer-about p { color: rgba(255,255,255,0.7); font-size: 0.9rem; margin-bottom: 1.5rem; }
-        .social-links a { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: rgba(255,255,255,0.1); border-radius: 50%; margin-right: 10px; transition: var(--transition); }
-        .social-links a:hover { background: var(--gold); color: var(--navy); }
-        .footer-col h4 { color: var(--gold); margin-bottom: 1.5rem; font-size: 1.2rem; }
-        .footer-col ul li { margin-bottom: 0.8rem; }
-        .footer-col ul li a { color: rgba(255,255,255,0.7); font-size: 0.95rem; }
-        .footer-col ul li a:hover { color: var(--white); padding-left: 5px; }
-        .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.85rem; color: rgba(255,255,255,0.5); }
+        footer { background: var(--navy-dark); color: var(--white); padding: 5rem 0 2rem 0; position: relative; overflow: hidden; }
+        footer::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--gold); }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 4rem; margin-bottom: 3rem; }
+        .footer-logo { display: flex; align-items: center; gap: 12px; font-family: var(--font-head); font-size: 1.6rem; margin-bottom: 1.5rem; text-transform: uppercase; }
+        .footer-logo i { color: var(--gold); font-size: 2rem; }
+        .footer-about p { color: rgba(255,255,255,0.7); font-size: 0.95rem; margin-bottom: 2rem; }
+        .social-links a { display: inline-flex; align-items: center; justify-content: center; width: 45px; height: 45px; background: rgba(255,255,255,0.1); border-radius: 50%; margin-right: 10px; transition: var(--transition); font-size: 1.2rem; }
+        .social-links a:hover { background: var(--gold); color: var(--navy); transform: translateY(-3px); }
+        .footer-col h4 { color: var(--gold); margin-bottom: 1.5rem; font-size: 1.2rem; position: relative; padding-bottom: 10px; }
+        .footer-col h4::after { content: ''; position: absolute; left: 0; bottom: 0; width: 40px; height: 2px; background: var(--white); opacity: 0.3; }
+        .footer-col ul li { margin-bottom: 1rem; }
+        .footer-col ul li a { color: rgba(255,255,255,0.7); font-size: 0.95rem; display: inline-flex; align-items: center; }
+        .footer-col ul li a::before { content: '\f105'; font-family: 'FontAwesome'; margin-right: 8px; font-size: 0.8rem; opacity: 0; transition: var(--transition); transform: translateX(-10px); color: var(--gold); }
+        .footer-col ul li a:hover { color: var(--white); transform: translateX(5px); }
+        .footer-col ul li a:hover::before { opacity: 1; transform: translateX(0); }
+        .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.9rem; color: rgba(255,255,255,0.5); }
 
         /* Responsive Design */
         @media (max-width: 1024px) {
-            h1 { font-size: 3rem; }
             .nav-links { display: none; }
             .mobile-menu-btn { display: block; }
-            .stats-grid { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: 1fr; border-radius: 0; }
             .stat-box { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); }
             .values-section { grid-template-columns: 1fr; }
-            .values-img { min-height: 300px; }
+            .values-img { min-height: 400px; }
             .gallery-grid { grid-template-columns: repeat(2, 1fr); }
-            .footer-grid { grid-template-columns: 1fr 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
         }
 
         @media (max-width: 768px) {
-            .hero { padding-top: 5rem; text-align: center; }
-            .hero-content { margin: 0 auto; }
-            .hero-buttons { flex-direction: column; }
-            .steps-container { flex-direction: column; gap: 2rem; margin: 2rem 0; }
+            h1 { font-size: 2.5rem; }
+            .hero-content { margin: 0 auto; text-align: center; padding-top: 2rem; }
+            .hero-buttons { flex-direction: column; align-items: center; }
+            .steps-container { flex-direction: column; gap: 3rem; margin: 2rem 0; }
             .steps-container::before { display: none; }
             .news-grid { grid-template-columns: 1fr; }
             .gallery-grid { grid-template-columns: 1fr; }
             .footer-grid { grid-template-columns: 1fr; text-align: center; }
+            .footer-col h4::after { left: 50%; transform: translateX(-50%); }
             .social-links { justify-content: center; }
             .nav-actions .portal-link { display: none; }
         }
 
-        /* Mobile Nav Toggle Class */
-        .nav-links.active { display: flex; flex-direction: column; position: absolute; top: 90px; left: 0; right: 0; background: var(--white); padding: 2rem; box-shadow: 0 10px 10px rgba(0,0,0,0.1); text-align: center; }
+        /* Mobile Menu Active Class */
+        .nav-links.active { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background: var(--white); padding: 2rem; box-shadow: 0 10px 20px rgba(0,0,0,0.1); text-align: center; gap: 1.5rem; border-top: 1px solid #eee; }
     </style>
 </head>
 <body>
 
-    <!-- Header / Nav -->
+    <!-- Sticky Header -->
     <header id="main-header">
         <div class="container nav-container">
             <a href="#" class="logo">
@@ -187,39 +245,44 @@
             <nav>
                 <ul class="nav-links" id="nav-links">
                     <li><a href="#">Home</a></li>
-                    <li><a href="#">About Machrina</a></li>
+                    <li><a href="#">About</a></li>
                     <li><a href="#">Academics</a></li>
                     <li><a href="#">Admissions</a></li>
                     <li><a href="#">Student Life</a></li>
-                    <li><a href="#">News & Events</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">News</a></li>
                 </ul>
             </nav>
 
             <div class="nav-actions">
-                <a href="#" class="portal-link">Student/Parent Portal</a>
+                <a href="#" class="portal-link"><i class="fa-solid fa-user-graduate"></i> Portal</a>
                 <a href="#" class="btn btn-gold">Apply Now</a>
                 <i class="fa-solid fa-bars mobile-menu-btn" onclick="toggleMenu()"></i>
             </div>
         </div>
     </header>
 
-    <!-- Hero Section -->
+    <!-- Animated Hero Slider Section -->
     <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Building Excellence in Faith, Wisdom, and Character</h1>
-                <p class="subhead">St. Thomas More Machrina High School – Nurturing the leaders of tomorrow through holistic education and academic discipline.</p>
+        <!-- Slider Images -->
+        <div class="hero-slide active" style="background-image: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1920&auto=format&fit=crop');"></div>
+        <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=1920&auto=format&fit=crop');"></div>
+        <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=1920&auto=format&fit=crop');"></div>
+        
+        <div class="hero-overlay"></div>
+        <div class="container relative z-index-2">
+            <div class="hero-content reveal">
+                <h1>Building Excellence in Faith, Wisdom, & Character</h1>
+                <p class="subhead">St. Thomas More Machrina High School – Nurturing the leaders of tomorrow through rigorous holistic education and academic discipline.</p>
                 <div class="hero-buttons">
-                    <a href="#" class="btn btn-navy">Explore Our Curriculum</a>
-                    <a href="#" class="btn btn-outline">Visit Our Campus</a>
+                    <a href="#" class="btn btn-gold">Explore Curriculum <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i></a>
+                    <a href="#" class="btn btn-outline">Visit Campus</a>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Trust Indicators Overlay -->
-    <div class="container stats-overlay">
+    <div class="container stats-overlay reveal delay-1">
         <div class="stats-grid">
             <div class="stat-box">
                 <i class="fa-solid fa-award"></i>
@@ -240,154 +303,139 @@
     </div>
 
     <!-- Academics Section -->
-    <section class="section-padding">
+    <section class="section-padding reveal">
         <div class="container">
             <div class="text-center">
                 <h2>Academic Excellence</h2>
-                <p style="max-width: 600px; margin: 0 auto;">Discover a rigorous, university-preparatory curriculum designed to challenge students aged 12–18 to reach their highest potential.</p>
+                <p style="max-width: 600px; margin: 0 auto; font-size: 1.1rem;">Discover a rigorous, university-preparatory curriculum designed to challenge students aged 12–18 to reach their absolute highest potential.</p>
             </div>
             
             <div class="academics-grid">
-                <div class="academic-card">
+                <div class="academic-card reveal delay-1">
                     <i class="fa-solid fa-book-open-reader"></i>
                     <h3>Junior Secondary</h3>
-                    <p>Laying a strong foundation in core subjects while encouraging curiosity and critical thinking.</p>
+                    <p>Laying a strong foundation in core subjects while encouraging curiosity, creativity, and critical thinking.</p>
                     <a href="#">Learn More <i class="fa-solid fa-arrow-right"></i></a>
                 </div>
-                <div class="academic-card">
+                <div class="academic-card reveal delay-2">
                     <i class="fa-solid fa-flask-vial"></i>
                     <h3>Senior Secondary</h3>
-                    <p>Specialized tracks in Sciences and Arts to prepare students for top universities worldwide.</p>
+                    <p>Specialized intensive tracks in Sciences and Arts to prepare students for top universities worldwide.</p>
                     <a href="#">Learn More <i class="fa-solid fa-arrow-right"></i></a>
                 </div>
-                <div class="academic-card">
+                <div class="academic-card reveal delay-3">
                     <i class="fa-solid fa-microchip"></i>
                     <h3>STEM Excellence</h3>
-                    <p>State-of-the-art laboratories and coding programs shaping future innovators.</p>
+                    <p>State-of-the-art laboratories, robotics, and coding programs shaping the tech innovators of tomorrow.</p>
                     <a href="#">Learn More <i class="fa-solid fa-arrow-right"></i></a>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- Continuous Scrolling Marquee Gallery -->
+    <section class="marquee-section reveal">
+        <div class="text-center" style="margin-bottom: 2rem;">
+            <h2>Life at Machrina</h2>
+        </div>
+        <div class="marquee-container">
+            <!-- First Set -->
+            <div class="marquee-item"><img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=600&auto=format&fit=crop" alt="Classroom"></div>
+            <div class="marquee-item"><img src="https://images.unsplash.com/photo-1526232761682-d26e03ac148e?q=80&w=600&auto=format&fit=crop" alt="Sports"></div>
+            <div class="marquee-item"><img src="https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?q=80&w=600&auto=format&fit=crop" alt="Music"></div>
+            <div class="marquee-item"><img src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?q=80&w=600&auto=format&fit=crop" alt="Library"></div>
+            <div class="marquee-item"><img src="https://images.unsplash.com/photo-1593113589914-009ce4076356?q=80&w=600&auto=format&fit=crop" alt="Community"></div>
+            <!-- Duplicate Set for Seamless Loop -->
+            <div class="marquee-item"><img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=600&auto=format&fit=crop" alt="Classroom"></div>
+            <div class="marquee-item"><img src="https://images.unsplash.com/photo-1526232761682-d26e03ac148e?q=80&w=600&auto=format&fit=crop" alt="Sports"></div>
+            <div class="marquee-item"><img src="https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?q=80&w=600&auto=format&fit=crop" alt="Music"></div>
+            <div class="marquee-item"><img src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?q=80&w=600&auto=format&fit=crop" alt="Library"></div>
+            <div class="marquee-item"><img src="https://images.unsplash.com/photo-1593113589914-009ce4076356?q=80&w=600&auto=format&fit=crop" alt="Community"></div>
         </div>
     </section>
 
     <!-- Split Section: Our Patron & Values -->
-    <section class="values-section">
+    <section class="values-section reveal">
         <div class="values-img"></div>
-        <div class="values-content">
+        <div class="values-content text-left">
             <h2>Our Patron & Values</h2>
-            <p>Inspired by the life of St. Thomas More, Machrina High School is dedicated to cultivating integrity, hard work, and spiritual growth in every student.</p>
-            <blockquote>"I die the King's good servant, but God's first." <br><span style="font-size: 1rem; color: var(--gold);">- St. Thomas More</span></blockquote>
-            <p>We believe education is more than academics; it is the formation of the whole person. Our campus serves as a bridge to university life, emphasizing independence alongside moral responsibility.</p>
+            <p>Inspired by the life and unwavering ethics of St. Thomas More, Machrina High School is deeply dedicated to cultivating integrity, relentless hard work, and profound spiritual growth in every student.</p>
+            <blockquote class="reveal delay-1">"I die the King's good servant, but God's first." <br><span style="font-size: 1.1rem; color: var(--gold); font-style: normal; font-family: var(--font-head); text-transform: uppercase;">- St. Thomas More</span></blockquote>
+            <p class="reveal delay-2">We believe education is more than mere academics; it is the comprehensive formation of the whole person. Our beautiful campus serves as a bridge to university life, emphasizing independence alongside moral responsibility.</p>
         </div>
     </section>
 
     <!-- Admissions Path -->
-    <section class="section-padding admissions-bg">
+    <section class="section-padding reveal">
         <div class="container">
             <div class="text-center">
                 <h2>Begin Your Journey</h2>
-                <p>Joining the Machrina family is a straightforward process designed to help us get to know you.</p>
+                <p style="max-width: 600px; margin: 0 auto; font-size: 1.1rem;">Joining the Machrina family is a straightforward, supportive process designed to help us get to know your unique potential.</p>
             </div>
 
             <div class="steps-container">
-                <div class="step">
-                    <div class="step-icon"><i class="fa-regular fa-circle-question"></i></div>
+                <div class="step reveal delay-1">
+                    <div class="step-icon"><i class="fa-regular fa-envelope-open"></i></div>
                     <h3>1. Inquire</h3>
-                    <p>Reach out to our admissions team to learn more about our community.</p>
+                    <p>Reach out to our welcoming admissions team to learn more about our vibrant community.</p>
                 </div>
-                <div class="step">
+                <div class="step reveal delay-2">
                     <div class="step-icon"><i class="fa-solid fa-map-location-dot"></i></div>
                     <h3>2. Visit</h3>
-                    <p>Schedule a campus tour to experience the Machrina difference firsthand.</p>
+                    <p>Schedule a personal campus tour to experience the Machrina difference firsthand.</p>
                 </div>
-                <div class="step">
+                <div class="step reveal delay-3">
                     <div class="step-icon"><i class="fa-solid fa-file-signature"></i></div>
                     <h3>3. Apply</h3>
-                    <p>Submit your application and academic records via our portal.</p>
+                    <p>Submit your application and previous academic records via our secure online portal.</p>
                 </div>
             </div>
 
-            <div class="text-center">
-                <a href="#" class="btn btn-navy">Download Prospectus</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Campus Life Gallery -->
-    <section class="section-padding bg-light">
-        <div class="container">
-            <div class="text-center">
-                <h2>Campus Life</h2>
-            </div>
-            
-            <div class="gallery-grid">
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1526232761682-d26e03ac148e?q=80&w=800&auto=format&fit=crop" alt="Sports & Athletics">
-                    <div class="gallery-overlay">
-                        <h3>Athletics & Sports</h3>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?q=80&w=800&auto=format&fit=crop" alt="Music & Drama">
-                    <div class="gallery-overlay">
-                        <h3>Music & Drama</h3>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=800&auto=format&fit=crop" alt="Science Fair">
-                    <div class="gallery-overlay">
-                        <h3>Science Fair</h3>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1593113589914-009ce4076356?q=80&w=800&auto=format&fit=crop" alt="Community Service">
-                    <div class="gallery-overlay">
-                        <h3>Community Service</h3>
-                    </div>
-                </div>
+            <div class="text-center reveal">
+                <a href="#" class="btn btn-navy" style="font-size: 1.1rem; padding: 16px 35px;"><i class="fa-solid fa-download" style="margin-right: 10px;"></i> Download Prospectus</a>
             </div>
         </div>
     </section>
 
     <!-- Machrina Newsroom -->
-    <section class="section-padding news-bg">
+    <section class="section-padding news-bg reveal">
         <div class="container">
             <div class="text-center">
                 <h2>Latest from Machrina</h2>
             </div>
 
             <div class="news-grid">
-                <div class="news-card">
+                <div class="news-card reveal delay-1">
                     <div class="news-img">
-                        <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=800&auto=format&fit=crop" alt="Debate Winners">
+                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=800&auto=format&fit=crop" alt="Debate Winners">
                     </div>
                     <div class="news-content">
                         <span class="news-date">Oct 12, 2025</span>
                         <h3>Inter-school Debate Champions</h3>
-                        <p>Our senior students took home the gold at the national debate championship this weekend.</p>
-                        <a href="#">Read More &rarr;</a>
+                        <p>Our senior students took home the gold at the national debate championship this weekend after an intense final round.</p>
+                        <a href="#">Read Full Story <i class="fa-solid fa-arrow-right"></i></a>
                     </div>
                 </div>
-                <div class="news-card">
+                <div class="news-card reveal delay-2">
                     <div class="news-img">
                         <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=800&auto=format&fit=crop" alt="Open Day">
                     </div>
                     <div class="news-content">
                         <span class="news-date">Nov 05, 2025</span>
                         <h3>Upcoming Open Day 2026</h3>
-                        <p>Prospective parents and students are invited to explore our campus and meet our dedicated faculty.</p>
-                        <a href="#">Read More &rarr;</a>
+                        <p>Prospective parents and future students are invited to explore our campus, view facilities, and meet our faculty.</p>
+                        <a href="#">Register Here <i class="fa-solid fa-arrow-right"></i></a>
                     </div>
                 </div>
-                <div class="news-card">
+                <div class="news-card reveal delay-3">
                     <div class="news-img">
-                        <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=800&auto=format&fit=crop" alt="New Science Lab">
+                        <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop" alt="New Science Lab">
                     </div>
                     <div class="news-content">
                         <span class="news-date">Nov 20, 2025</span>
                         <h3>Inauguration of New Science Wing</h3>
-                        <p>Expanding our commitment to STEM with a state-of-the-art laboratory facility.</p>
-                        <a href="#">Read More &rarr;</a>
+                        <p>Expanding our commitment to STEM with a state-of-the-art laboratory facility funded by generous alumni.</p>
+                        <a href="#">View Gallery <i class="fa-solid fa-arrow-right"></i></a>
                     </div>
                 </div>
             </div>
@@ -400,29 +448,30 @@
             <div class="footer-grid">
                 <div class="footer-about">
                     <div class="footer-logo">
-                        <i class="fa-solid fa-shield-halved"></i> St. Thomas More Machrina
+                        <i class="fa-solid fa-shield-halved"></i> St. Thomas More<br>Machrina
                     </div>
                     <p>Building Excellence in Faith, Wisdom, and Character. Preparing students for lifelong success through a rigorous, values-based education.</p>
                     <div class="social-links">
                         <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
                         <a href="#"><i class="fa-brands fa-instagram"></i></a>
                         <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fa-brands fa-youtube"></i></a>
                     </div>
                 </div>
                 
                 <div class="footer-col">
                     <h4>Contact Us</h4>
                     <ul>
-                        <li><i class="fa-solid fa-location-dot" style="color: var(--gold); margin-right: 5px;"></i> 123 Academic Way, Education City</li>
-                        <li><i class="fa-solid fa-phone" style="color: var(--gold); margin-right: 5px;"></i> +1 (555) 123-4567</li>
-                        <li><i class="fa-solid fa-envelope" style="color: var(--gold); margin-right: 5px;"></i> info@machrina.edu</li>
+                        <li><a href="#"><i class="fa-solid fa-location-dot" style="color: var(--gold); margin-right: 8px;"></i> 123 Academic Way, City</a></li>
+                        <li><a href="#"><i class="fa-solid fa-phone" style="color: var(--gold); margin-right: 8px;"></i> +1 (555) 123-4567</a></li>
+                        <li><a href="#"><i class="fa-solid fa-envelope" style="color: var(--gold); margin-right: 8px;"></i> info@machrina.edu</a></li>
                     </ul>
                 </div>
 
                 <div class="footer-col">
                     <h4>Quick Links</h4>
                     <ul>
-                        <li><a href="#">Admissions</a></li>
+                        <li><a href="#">Admissions Process</a></li>
                         <li><a href="#">Career Opportunities</a></li>
                         <li><a href="#">Alumni Network</a></li>
                         <li><a href="#">Term Dates</a></li>
@@ -431,12 +480,12 @@
                 </div>
 
                 <div class="footer-col">
-                    <h4>Academics</h4>
+                    <h4>Academics & Life</h4>
                     <ul>
-                        <li><a href="#">Junior Secondary</a></li>
-                        <li><a href="#">Senior Secondary</a></li>
-                        <li><a href="#">STEM Programs</a></li>
-                        <li><a href="#">Library & Resources</a></li>
+                        <li><a href="#">Junior Secondary Curriculum</a></li>
+                        <li><a href="#">Senior Secondary Arts & Science</a></li>
+                        <li><a href="#">STEM & Robotics Programs</a></li>
+                        <li><a href="#">Athletics & Performing Arts</a></li>
                     </ul>
                 </div>
             </div>
@@ -447,12 +496,59 @@
         </div>
     </footer>
 
-    <!-- Simple JS for Mobile Menu -->
+    <!-- JavaScript for Animations and Interactions -->
     <script>
+        // Mobile Menu Toggle
         function toggleMenu() {
             const nav = document.getElementById('nav-links');
             nav.classList.toggle('active');
         }
+
+        // Sticky Header Effect on Scroll
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('main-header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Hero Image Slider (Crossfade)
+        const slides = document.querySelectorAll('.hero-slide');
+        let currentSlide = 0;
+
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+        // Change slide every 6 seconds
+        setInterval(nextSlide, 6000);
+
+        // Scroll Reveal Animation (Intersection Observer)
+        const revealElements = document.querySelectorAll('.reveal');
+
+        const revealOptions = {
+            threshold: 0.15, // Trigger when 15% of the element is visible
+            rootMargin: "0px 0px -50px 0px" // Triggers slightly before it hits the bottom
+        };
+
+        const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) {
+                    return;
+                } else {
+                    entry.target.classList.add('active');
+                    // Optional: Stop observing once revealed to keep the element visible
+                    observer.unobserve(entry.target); 
+                }
+            });
+        }, revealOptions);
+
+        revealElements.forEach(el => {
+            revealOnScroll.observe(el);
+        });
     </script>
 </body>
 </html>
