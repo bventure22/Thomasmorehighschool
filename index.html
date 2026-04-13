@@ -94,7 +94,7 @@
         .logo i { font-size: 2.2rem; color: var(--gold); transition: var(--transition); }
         .logo:hover i { transform: rotate(15deg) scale(1.1); }
         .logo span { font-size: 1.4rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
-        .logo span .highlight { color: var(--gold); } /* Two-tone logo text */
+        .logo span .highlight { color: var(--gold); } 
 
         .nav-links { display: flex; gap: 2.5rem; }
         .nav-links a { font-family: var(--font-head); font-weight: 600; font-size: 1.15rem; text-transform: uppercase; letter-spacing: 1.2px; color: var(--navy); position: relative; padding: 5px 0; transition: color 0.3s ease; }
@@ -126,16 +126,15 @@
         .hero-content p.subhead { font-size: 1.05rem; font-weight: 300; margin-bottom: 1.8rem; max-width: 550px; color: rgba(255,255,255,0.9); }
         .hero-buttons { display: flex; gap: 1rem; }
 
-        /* Stats Overlay */
-        .stats-overlay { position: relative; margin-top: -50px; z-index: 10; }
-        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); background: var(--navy); box-shadow: 0 15px 30px rgba(0,0,0,0.15); border-radius: 8px; overflow: hidden; }
-        .stat-box { padding: 2rem; text-align: center; color: var(--white); border-right: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden; transition: var(--transition); }
+        /* Single Centered Stat Badge Overlay */
+        .stats-overlay { position: relative; margin-top: -50px; z-index: 10; display: flex; justify-content: center; }
+        .stats-grid { display: flex; background: var(--navy); box-shadow: 0 15px 30px rgba(0,0,0,0.15); border-radius: 8px; overflow: hidden; min-width: 300px; }
+        .stat-box { padding: 2rem 4rem; text-align: center; color: var(--white); position: relative; overflow: hidden; transition: var(--transition); width: 100%; }
         .stat-box:hover { background: var(--navy-dark); transform: translateY(-5px); }
-        .stat-box:last-child { border-right: none; }
-        .stat-box i { font-size: 2rem; color: var(--gold); margin-bottom: 0.8rem; transition: transform 0.3s; }
+        .stat-box i { font-size: 2.2rem; color: var(--gold); margin-bottom: 0.8rem; transition: transform 0.3s; }
         .stat-box:hover i { transform: scale(1.2); }
-        .stat-box h4 { font-size: 1.5rem; margin-bottom: 0.3rem; }
-        .stat-box p { font-size: 0.85rem; margin-bottom: 0; opacity: 0.8; font-family: var(--font-head); text-transform: uppercase; letter-spacing: 1px; }
+        .stat-box h4 { font-size: 1.6rem; margin-bottom: 0.3rem; }
+        .stat-box p { font-size: 0.9rem; margin-bottom: 0; opacity: 0.8; font-family: var(--font-head); text-transform: uppercase; letter-spacing: 1px; }
 
         /* Academics Section */
         .academics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem; }
@@ -166,8 +165,7 @@
         .values-content { padding: 5rem 4rem; display: flex; flex-direction: column; justify-content: center; }
         .values-content h2 { color: var(--gold); margin-bottom: 1rem; }
         .values-content h2::after { background: var(--white); left: 0; transform: none; }
-        .values-content blockquote { font-size: 1.4rem; font-style: italic; font-weight: 300; border-left: 4px solid var(--gold); padding-left: 1.5rem; margin: 2rem 0; background: rgba(255,255,255,0.05); padding-top: 1rem; padding-bottom: 1rem; border-radius: 0 8px 8px 0; }
-        .values-content p { color: rgba(255,255,255,0.85); font-size: 1.05rem; }
+        .values-content p { color: rgba(255,255,255,0.85); font-size: 1.05rem; margin-bottom: 1.5rem; }
 
         /* Admissions Path */
         .steps-container { display: flex; justify-content: space-between; position: relative; margin: 4rem 0; }
@@ -216,11 +214,9 @@
 
         /* Responsive Design */
         @media (max-width: 1024px) {
-            .top-bar-left .contact-info { display: none; } /* Hide phone on smaller screens */
+            .top-bar-left .contact-info { display: none; }
             .nav-links { display: none; }
             .mobile-menu-btn { display: block; }
-            .stats-grid { grid-template-columns: 1fr; border-radius: 0; }
-            .stat-box { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); padding: 1.5rem; }
             .values-section { grid-template-columns: 1fr; }
             .values-img { min-height: 350px; }
             .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
@@ -228,10 +224,12 @@
 
         @media (max-width: 768px) {
             h1 { font-size: 2.2rem; }
-            .top-bar { display: none; } /* Hide utility bar entirely on mobile */
+            .top-bar { display: none; }
             .hero { height: auto; min-height: 80vh; padding: 6rem 0 3rem; }
             .hero-content { margin: 0 auto; text-align: center; padding-top: 2rem; }
             .hero-buttons { flex-direction: column; align-items: center; }
+            .stats-overlay { margin-top: -30px; }
+            .stat-box { padding: 1.5rem; }
             .steps-container { flex-direction: column; gap: 2.5rem; margin: 2rem 0; }
             .steps-container::before { display: none; }
             .news-grid { grid-template-columns: 1fr; }
@@ -248,7 +246,7 @@
     <!-- Sticky Header with Two-Tier Navigation -->
     <header id="main-header">
         
-        <!-- NEW: Top Utility Bar -->
+        <!-- Top Utility Bar -->
         <div class="top-bar">
             <div class="container top-bar-inner">
                 <div class="top-bar-left">
@@ -307,23 +305,13 @@
         </div>
     </section>
 
-    <!-- Trust Indicators Overlay -->
+    <!-- Single Centered Stat Badge Overlay -->
     <div class="container stats-overlay reveal delay-1">
         <div class="stats-grid">
             <div class="stat-box">
                 <i class="fa-solid fa-award"></i>
                 <h4>Top Tier</h4>
                 <p>National Results</p>
-            </div>
-            <div class="stat-box">
-                <i class="fa-solid fa-users-rectangle"></i>
-                <h4>40+</h4>
-                <p>Student Clubs</p>
-            </div>
-            <div class="stat-box">
-                <i class="fa-solid fa-cross"></i>
-                <h4>Values-Based</h4>
-                <p>Holistic Education</p>
             </div>
         </div>
     </div>
@@ -347,12 +335,6 @@
                     <i class="fa-solid fa-flask-vial"></i>
                     <h3>Senior Secondary</h3>
                     <p>Specialized intensive tracks in Sciences and Arts to prepare students for universities worldwide.</p>
-                    <a href="#">Learn More <i class="fa-solid fa-arrow-right"></i></a>
-                </div>
-                <div class="academic-card reveal delay-3">
-                    <i class="fa-solid fa-microchip"></i>
-                    <h3>STEM Excellence</h3>
-                    <p>State-of-the-art laboratories and robotics programs shaping the tech innovators of tomorrow.</p>
                     <a href="#">Learn More <i class="fa-solid fa-arrow-right"></i></a>
                 </div>
             </div>
@@ -385,9 +367,8 @@
         <div class="values-img"></div>
         <div class="values-content text-left">
             <h2>Our Patron & Values</h2>
-            <p>Inspired by the life and unwavering ethics of St. Thomas More, Machrina High School is dedicated to cultivating integrity, hard work, and profound spiritual growth.</p>
-            <blockquote class="reveal delay-1">"I die the King's good servant, but God's first." <br><span style="font-size: 1rem; color: var(--gold); font-style: normal; font-family: var(--font-head); text-transform: uppercase;">- St. Thomas More</span></blockquote>
-            <p class="reveal delay-2">We believe education is more than academics; it is the formation of the whole person. Our campus serves as a bridge to university life, emphasizing moral responsibility.</p>
+            <p>Thomas More Machrina is dedicated to form boys into young men who are responsible citizens. Boys are encouraged to imbibe the philosophy based on the Japanese and Chinese values. The Chinese value hard work, entrepreneur spirit and propensity to save while the Japanese are famous for their ability to seek, accept assimilate and adapt to changing needs and circumstances for their team spirit and discipline.</p>
+            <p class="reveal delay-1">We believe education is more than academics; it is the formation of the whole person. Our campus serves as a bridge to university life, emphasizing moral responsibility.</p>
         </div>
     </section>
 
@@ -533,7 +514,6 @@
         // Sticky Header Effect on Scroll
         window.addEventListener('scroll', () => {
             const header = document.getElementById('main-header');
-            // When scrolled down 40px, add the scrolled class to hide top-bar and shrink header
             if (window.scrollY > 40) {
                 header.classList.add('scrolled');
             } else {
