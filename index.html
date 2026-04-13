@@ -180,11 +180,7 @@
         .news-content { padding: 2rem; }
         .news-date { display: inline-block; background: var(--green); color: var(--white); padding: 4px 10px; border-radius: 20px; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 1rem; }
         .news-content h3 { color: var(--navy); font-size: 1.2rem; line-height: 1.4; margin-bottom: 0.5rem; }
-        .news-content p { font-size: 0.9rem; }
-        .news-content a { color: var(--navy); font-weight: 600; text-decoration: none; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 5px; margin-top: 10px; }
-        .news-content a i { font-size: 0.8rem; transition: var(--transition); }
-        .news-content a:hover { color: var(--gold); }
-        .news-content a:hover i { transform: translateX(5px); }
+        .news-content p { font-size: 0.9rem; margin-bottom: 0; } /* Set margin-bottom to 0 since links are removed */
 
         /* Footer */
         footer { background: var(--navy-dark); color: var(--white); padding: 4rem 0 2rem 0; position: relative; overflow: hidden; }
@@ -396,7 +392,6 @@
                         <span class="news-date">Oct 12, 2025</span>
                         <h3>Graduation Ceremony</h3>
                         <p>A prestigious event that marks the culmination of years of academic rigor and character building. The school honors students who have excelled not just in NECTA national subjects, but also in discipline, leadership, and extracurricular activities.</p>
-                        <a href="#">Read Full Story <i class="fa-solid fa-arrow-right"></i></a>
                     </div>
                 </div>
                 <div class="news-card reveal delay-2">
@@ -407,7 +402,6 @@
                         <span class="news-date">Nov 05, 2025</span>
                         <h3>Upcoming Open Day 2026</h3>
                         <p>Prospective parents and future students are invited to explore our campus and meet our faculty.</p>
-                        <a href="#">Register Here <i class="fa-solid fa-arrow-right"></i></a>
                     </div>
                 </div>
                 <div class="news-card reveal delay-3">
@@ -418,7 +412,6 @@
                         <span class="news-date">Nov 20, 2025</span>
                         <h3>Inauguration of New Science Wing</h3>
                         <p>Expanding our commitment to STEM with a state-of-the-art laboratory facility.</p>
-                        <a href="#">View Gallery <i class="fa-solid fa-arrow-right"></i></a>
                     </div>
                 </div>
             </div>
