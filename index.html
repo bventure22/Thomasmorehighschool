@@ -90,9 +90,9 @@
         /* Main Navigation */
         .nav-container { display: flex; justify-content: space-between; align-items: center; height: 90px; transition: var(--transition); }
         
-        .logo { display: flex; align-items: center; gap: 12px; font-family: var(--font-head); color: var(--navy); line-height: 1.1; }
-        .logo i { font-size: 2.2rem; color: var(--gold); transition: var(--transition); }
-        .logo:hover i { transform: rotate(15deg) scale(1.1); }
+        .logo { display: flex; align-items: center; gap: 15px; font-family: var(--font-head); color: var(--navy); line-height: 1.1; }
+        .school-img-logo { height: 60px; width: auto; object-fit: contain; transition: var(--transition); }
+        .logo:hover .school-img-logo { transform: scale(1.05); }
         .logo span { font-size: 1.4rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
         .logo span .highlight { color: var(--gold); } 
 
@@ -108,6 +108,7 @@
         /* Sticky Scrolled State */
         header.scrolled .top-bar { height: 0; opacity: 0; }
         header.scrolled .nav-container { height: 75px; }
+        header.scrolled .school-img-logo { height: 50px; }
         
         /* ----------------------------------------------------- */
 
@@ -198,8 +199,8 @@
         footer { background: var(--navy-dark); color: var(--white); padding: 4rem 0 2rem 0; position: relative; overflow: hidden; }
         footer::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--gold); }
         .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 3rem; margin-bottom: 3rem; }
-        .footer-logo { display: flex; align-items: center; gap: 10px; font-family: var(--font-head); font-size: 1.4rem; margin-bottom: 1.2rem; text-transform: uppercase; }
-        .footer-logo i { color: var(--gold); font-size: 1.8rem; }
+        .footer-logo { display: flex; align-items: center; gap: 15px; font-family: var(--font-head); font-size: 1.4rem; margin-bottom: 1.2rem; text-transform: uppercase; line-height: 1.2; }
+        .footer-img-logo { height: 65px; width: auto; object-fit: contain; }
         .footer-about p { color: rgba(255,255,255,0.7); font-size: 0.9rem; margin-bottom: 1.5rem; }
         .social-links a { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: rgba(255,255,255,0.1); border-radius: 50%; margin-right: 8px; transition: var(--transition); font-size: 1.1rem; }
         .social-links a:hover { background: var(--gold); color: var(--navy); transform: translateY(-3px); }
@@ -236,6 +237,7 @@
             .footer-grid { grid-template-columns: 1fr; text-align: center; }
             .footer-col h4::after { left: 50%; transform: translateX(-50%); }
             .social-links { justify-content: center; }
+            .footer-logo { justify-content: center; text-align: left; }
         }
 
         .nav-links.active { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background: var(--white); padding: 1.5rem; box-shadow: 0 10px 20px rgba(0,0,0,0.1); text-align: center; gap: 1.2rem; border-top: 1px solid #eee; }
@@ -263,7 +265,8 @@
         <!-- Main Navigation -->
         <div class="container nav-container">
             <a href="#" class="logo">
-                <i class="fa-solid fa-shield-halved"></i>
+                <!-- INSERTED CUSTOM LOGO HERE -->
+                <img src="logo.png" alt="St. Thomas More Machrina Crest" class="school-img-logo">
                 <span>St. Thomas More<br><span class="highlight">Machrina</span></span>
             </a>
 
@@ -455,7 +458,9 @@
             <div class="footer-grid">
                 <div class="footer-about">
                     <div class="footer-logo">
-                        <i class="fa-solid fa-shield-halved"></i> St. Thomas More<br>Machrina
+                        <!-- INSERTED CUSTOM LOGO IN FOOTER HERE -->
+                        <img src="logo.png" alt="St. Thomas More Machrina Crest" class="footer-img-logo">
+                        <div>St. Thomas More<br>Machrina</div>
                     </div>
                     <p>Building Excellence in Faith, Wisdom, and Character. Preparing students for lifelong success through values-based education.</p>
                     <div class="social-links">
